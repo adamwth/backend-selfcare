@@ -13,19 +13,32 @@ through daily journaling and spontaneous messages with others.
 
 ### Request for guest account [POST]
 
-+ Request (application/json)
++ Request (application/x-www-form-urlencoded)
 
 + Response 200 (application/json)
 
-    + Attributes (AuthResponse)
+    + Attributes (AuthResponseGuest)
+    
+    + Body
+    
+            {
+                "id": "13ed88c3-a7c3-4aef-a688-8705895cca47",
+                "accessToken": {
+                    "token": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5YzllY2UyMS0yMDAxLTQwOGYtYWI0YS04MzY2OTlkMmJiNjMiLCJpYXQiOjE2MDA4NjUzOTUsImV4cCI6MTYwMDk1MTc5NX0.6rmhi_7SkYYzAXItZS55XGB8bjDUC_xfFNlY9TauoPg",
+                    "expires": "1d"
+                },
+                "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5YzllY2UyMS0yMDAxLTQwOGYtYWI0YS04MzY2OTlkMmJiNjMiLCJpYXQiOjE2MDA4NjUzOTV9.HkvwedlF-yf-o4tYUrvXE-lMZjSfBhCH-tF2ddEVbrI"
+            }
 
 + Response 500
+
+        The server encountered an error while trying to process the request
 
 ## Register [/auth/register]
 
 ### Register with credentials [POST]
 
-+ Request (application/json)
++ Request (application/x-www-form-urlencoded)
 
     + Attributes (AuthRequest)
 
@@ -33,121 +46,202 @@ through daily journaling and spontaneous messages with others.
 
     + Attributes (AuthResponse)
     
-+ Response 400
+    + Body
     
-+ Response 409
+            {
+                "id": "13ed88c3-a7c3-4aef-a688-8705895cca47",
+                "accessToken": {
+                    "token": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5YzllY2UyMS0yMDAxLTQwOGYtYWI0YS04MzY2OTlkMmJiNjMiLCJpYXQiOjE2MDA4NjUzOTUsImV4cCI6MTYwMDk1MTc5NX0.6rmhi_7SkYYzAXItZS55XGB8bjDUC_xfFNlY9TauoPg",
+                    "expires": "1d"
+                },
+                "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5YzllY2UyMS0yMDAxLTQwOGYtYWI0YS04MzY2OTlkMmJiNjMiLCJpYXQiOjE2MDA4NjUzOTV9.HkvwedlF-yf-o4tYUrvXE-lMZjSfBhCH-tF2ddEVbrI"
+            }
+    
++ Response 400 (text/html)
+
+        username and password fields cannot be empty
+    
++ Response 409 (text/html)
     
         Username already taken
 
-+ Response 500
++ Response 500 (text/html)
 
+        The server encountered an error while trying to process the request
 
 ## Login [/auth/login]
 
 ### Login with credentials [POST]
 
-+ Request (application/json)
++ Request (application/x-www-form-urlencoded)
 
     + Attributes (AuthRequest)
 
 + Response 200 (application/json)
 
     + Attributes (AuthResponse)
-
-+ Response 400
     
-+ Response 401
+    + Body
+    
+            {
+                "id": "13ed88c3-a7c3-4aef-a688-8705895cca47",
+                "accessToken": {
+                    "token": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5YzllY2UyMS0yMDAxLTQwOGYtYWI0YS04MzY2OTlkMmJiNjMiLCJpYXQiOjE2MDA4NjUzOTUsImV4cCI6MTYwMDk1MTc5NX0.6rmhi_7SkYYzAXItZS55XGB8bjDUC_xfFNlY9TauoPg",
+                    "expires": "1d"
+                },
+                "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5YzllY2UyMS0yMDAxLTQwOGYtYWI0YS04MzY2OTlkMmJiNjMiLCJpYXQiOjE2MDA4NjUzOTV9.HkvwedlF-yf-o4tYUrvXE-lMZjSfBhCH-tF2ddEVbrI"
+            }
+    
++ Response 400 (text/html)
 
+        username and password fields cannot be empty
+    
++ Response 401 (text/html)
+    
         User not found
-
-+ Response 401
-
+        
++ Response 401 (text/html)
+    
         Wrong password
+
++ Response 500 (text/html)
+
+        The server encountered an error while trying to process the request
 
 ## Logout [/auth/logout]
 
 ### Logout [DELETE]
 
-+ Request (application/json)
++ Request (application/x-www-form-urlencoded)
 
     + Attributes
-        - refreshToken (string)
+        + refreshToken (RefreshToken, required)
 
 + Response 204
     
-+ Response 401
++ Response 400 (text/html)
 
-+ Response 500
+        refreshToken cannot be empty
 
++ Response 500 (text/html)
+
+        The server encountered an error while trying to process the request
 
 ## Refresh token [/auth/token]
 
 ### Refresh access token [POST]
 
-+ Request (application/json)
++ Request (application/x-www-form-urlencoded)
 
     + Attributes
-        - refreshToken (string)
+        + refreshToken (RefreshToken, required)
 
-+ Response 200
++ Response 200 (application/json)
+
     + Attributes
-        - accessToken (AccessToken)
+        + accessToken (AccessToken)
         
-+ Response 400
++ Response 400 (text/html)
+
+        refreshToken cannot be empty
     
-+ Response 403
++ Response 403 (text/html)
 
         Invalid token
 
++ Response 500 (text/html)
+
+        The server encountered an error while trying to process the request
+
+## Update credentials [/auth/change]
+
+### Change username and password [POST]
+
+
++ Request (application/json)
+    If user does not have a username yet (i.e. guest account, social login account), both username and password are required.
+    Otherwise, only either one is required.
+
+    + Attributes
+        - username (string)
+        - password (string)
+
++ Response 200 (text/html)
+
+        Credentials updated
+
++ Response 400 (text/html)
+
+        Username and password must both be sent if there is no username yet.
+
 + Response 500
+
+        The server encountered an error while trying to process the request
 
 ## Facebook [/auth/facebook]
 
 ### Login with facebook [GET]
 
++ Request (application/json)
+    Authenticate with Facebook on client first, then send the Facebook ID in this request.
+
+    + Attributes
+        - fbId (string)
+
+
 + Response 200 (application/json)
 
     + Attributes (AuthResponse)
 
-+ Response 401
++ Response 400 (text/html)
 
-        "Failed to login to Facebook"
+        Missing fb id
     
 + Response 500
+
+        The server encountered an error while trying to process the request
 
 # Group Journal
 
 ## Journal pages in a range [/journal/page/range{?start,end}]
 
-### GET [GET]
+### Retrieve journal pages within a range [GET]
 
 + Parameters
     + start: `2020-09-01` (string, required) - start date, inclusive, required
     + end: `2020-09-30` (string, required) - end date, inclusive, required
 
++ Request (application/x-www-form-urlencoded)
 
-+ Request (application/json)
     + Headers
 
             Authentication: Bearer JWT
-    
 
 + Response 200 (application/json)
 
     + Attributes (array[JournalPage])
-
-+ Response 400
-
-    Missing start and end
     
     + Body
+    
+            [
+                {
+                    "id": "38f9972c-803e-4c5a-a687-00c4fd52ba59",
+                    "date": "2020-09-01",
+                    "weather": "sunny",
+                    "location": "sg",
+                    "prompt": "What are you grateful for today?",
+                    "content": "Mi familia",
+                    "mood": "happy"
+                }
+            ]
 
-+ Response 404
++ Response 400 (text/html)
 
-        No page between {start} and {end} found
+        start and end must both be specified
 
-+ Response 500
++ Response 500 (text/html)
 
+        The server encountered an error while trying to process the request
 
 ## Journal page on a specific date [/journal/page{?date}]
 
@@ -156,9 +250,10 @@ through daily journaling and spontaneous messages with others.
     
         Date of the journal page entry, in YYYY-MM-DD format.
 
-### GET [GET]
+### Retrieve the journal page on a specific date [GET]
 
-+ Request
++ Request (application/x-www-form-urlencoded)
+
     + Headers
 
             Authentication: Bearer JWT
@@ -166,45 +261,61 @@ through daily journaling and spontaneous messages with others.
 + Response 200 (application/json)
 
     + Attributes (JournalPage)
-
-+ Response 400
-
-    Missing date
     
     + Body
+    
+            {
+                "id": "38f9972c-803e-4c5a-a687-00c4fd52ba59",
+                "date": "2020-09-01",
+                "weather": "sunny",
+                "location": "sg",
+                "prompt": "What are you grateful for today?",
+                "content": "Mi familia",
+                "mood": "happy"
+            }
 
-+ Response 404
++ Response 400 (text/html)
+
+        date must be specified
+
++ Response 404 (text/html)
 
         No page on {date} found
 
-+ Response 500
++ Response 500 (text/html)
 
-### POST [POST]
+        The server encountered an error while trying to process the request
 
-+ Request (application/json)
+### Create and fill in the journal page for a specific date [POST]
+
++ Request (application/x-www-form-urlencoded)
+
     + Headers
 
             Authentication: Bearer JWT
 
-    + Attributes (JournalPage)
+    + Attributes (JournalPageInformation)
 
-+ Response 200 (application/json)
++ Response 200 (text/html)
 
-+ Response 400
+        New journal page added
 
-    Missing date
-    
-    + Body
++ Response 400 (text/html)
 
-+ Response 500
+        date must be specified
+
++ Response 500 (text/html)
+
+        The server encountered an error while trying to process the request
 
 # Group Conversation
 
 ## List of all of the user's conversations [/conversation/withUser]
 
-### GET [GET]
+### Retrieve all conversations that user is in [GET]
 
-+ Request (application/json)
++ Request (application/x-www-form-urlencoded)
+
     + Headers
 
             Authentication: Bearer JWT
@@ -212,12 +323,31 @@ through daily journaling and spontaneous messages with others.
 + Response 200 (application/json)
 
     + Attributes (array[Conversation])
+    
+    + Body
+    
+            [
+                {
+                    "id": "3d8c5095-e897-4e8d-ac97-74b7f1be0c10",
+                    "first_alias": "involved-fuchsia-takin",
+                    "second_alias": "homely-coffee-toad",
+                    "first_user_id": "edf92800-9981-4105-8187-b02c211a6fdf",
+                    "second_user_id": "3b1cf85c-2db3-4ec9-b9bc-37023097121e",
+                    "createdAt": "2020-09-19T09:13:26.646Z",
+                    "deletedAt": null
+                }
+            ]
+
++ Response 500 (text/html)
+
+        The server encountered an error while trying to process the request
 
 ## Conversation with a specific ID [/conversation/{conversationId}]
 
-### GET [GET]
+### Retrieve conversation that user is in with another user [GET]
 
-+ Request (application/json)
++ Request (application/x-www-form-urlencoded)
+
     + Headers
 
             Authentication: Bearer JWT
@@ -225,75 +355,224 @@ through daily journaling and spontaneous messages with others.
 + Response 200 (application/json)
 
     + Attributes (Conversation)
+    
+    + Body
+    
+            {
+                "id": "3d8c5095-e897-4e8d-ac97-74b7f1be0c10",
+                "first_alias": "involved-fuchsia-takin",
+                "second_alias": "homely-coffee-toad",
+                "first_user_id": "edf92800-9981-4105-8187-b02c211a6fdf",
+                "second_user_id": "3b1cf85c-2db3-4ec9-b9bc-37023097121e",
+                "createdAt": "2020-09-19T09:13:26.646Z",
+                "deletedAt": null
+            }
+            
++ Response 404 (text/html)
 
-### DELETE [DELETE]
+        Conversation not found
 
-+ Request (application/json)
++ Response 500 (text/html)
+
+        The server encountered an error while trying to process the request
+
+### Delete conversation [DELETE]
+
++ Request (application/x-www-form-urlencoded)
+
     + Headers
 
             Authentication: Bearer JWT
         
-+ Response 200 (application/json)
++ Response 200 (text/html)
 
-## New conversation [/conversation/{?firstUserId,secondUserId}]
+        Conversation deleted
+        
++ Response 500 (text/html)
 
-### POST [POST]
+        The server encountered an error while trying to process the request
 
-+ Parameters
-    - firstUserId (AliceId)
-    - secondUserId(BobId)
+## New conversation [/conversation]
 
-+ Request (application/json)
+### Create a new conversation between 2 users [POST]
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+        + secondUserId (BobId)
+            
     + Headers
-
+            
             Authentication: Bearer JWT
 
 + Response 200 (application/json)
 
     + Attributes (Conversation)
+    
+    + Body
+    
+            {
+                "id": "3d8c5095-e897-4e8d-ac97-74b7f1be0c10",
+                "first_alias": "involved-fuchsia-takin",
+                "second_alias": "homely-coffee-toad",
+                "first_user_id": "edf92800-9981-4105-8187-b02c211a6fdf",
+                "second_user_id": "3b1cf85c-2db3-4ec9-b9bc-37023097121e",
+                "createdAt": "2020-09-19T09:13:26.646Z",
+                "deletedAt": null
+            }
+
++ Response 400 (text/html)
+
+        Missing second user id
+        
++ Response 500 (text/html)
+
+        The server encountered an error while trying to process the request
 
 # Group Message
 
 ## Random unopened message [/message/randomUnopened]
 
-### GET [GET]
+### Retrieve a random unopened message from the cloud, excluding blocked users [GET]
 
-+ Request (application/json)
++ Request (application/x-www-form-urlencoded)
+
     + Headers
 
             Authentication: Bearer JWT
         
 + Response 200 (application/json)
 
-    + Attributes (Message)
+    + Attributes (UnopenedMessage)
+    
+    + Body
+    
+            {
+                "id": "56a72976-ce77-44e1-aa9b-7c55a071a65b",
+                "is_open": false,
+                "url": "cloudstorage.com",
+                "createdAt": "2020-09-19T09:13:26.646Z",
+                "deletedAt": null,
+                "user_id": "edf92800-9981-4105-8187-b02c211a6fdf",
+                "conversation_id": null
+            }
+
++ Response 404 (text/html)
+
+        No random unopened messages found
+
++ Response 500 (text/html)
+
+        The server encountered an error while trying to process the request
+        
+## Messages stored in the cloud [/message/validCount]
+
+### Retrieve the number of unopened messages in the cloud, excluding blocked users [GET]
+
++ Request (application/x-www-form-urlencoded)
+
+    + Headers
+
+            Authentication: Bearer JWT
+        
++ Response 200 (application/json)
+
+    + Attributes
+        + count: 5 (number) `The number of unopened messages available to the user`
+    
+    + Body
+    
+            {
+                "count": 5
+            }
+
++ Response 500 (text/html)
+
+        The server encountered an error while trying to process the request
 
 ## Message with a specific ID [/message/{messageId}]
 
-### GET [GET]
+### Retrieve a message [GET]
 
-+ Request (application/json)
++ Request (application/x-www-form-urlencoded)
+
     + Headers
 
             Authentication: Bearer JWT
         
 + Response 200 (application/json)
 
-    + Attributes (Message)
+    + Attributes (UnopenedMessage)
+    
+    + Body
+    
+            {
+                "id": "56a72976-ce77-44e1-aa9b-7c55a071a65b",
+                "is_open": false,
+                "url": "cloudstorage.com",
+                "createdAt": "2020-09-19T09:13:26.646Z",
+                "deletedAt": null,
+                "user_id": "edf92800-9981-4105-8187-b02c211a6fdf",
+                "conversation_id": null
+            }
 
-### DELETE [DELETE]
++ Response 404 (text/html)
 
-+ Request (application/json)
+        No message found
+
++ Response 500 (text/html)
+
+        The server encountered an error while trying to process the request
+
+### Delete a message [DELETE]
+
++ Request (application/x-www-form-urlencoded)
+
     + Headers
 
             Authentication: Bearer JWT
+            
++ Response 200 (text/html)
+
+        Message deleted
         
-+ Response 200 (application/json)
++ Response 500 (text/html)
 
-## All messages with a specific conversation ID [/message/withConversation/{conversationId}]
+        The server encountered an error while trying to process the request
 
-### GET [GET]
+### Open a message [PUT]
 
-+ Request (application/json)
++ Request (application/x-www-form-urlencoded)
+
+    + Headers
+
+            Authentication: Bearer JWT
+    
+    + Attributes
+        + conversationId (ConversationId)
+        
++ Response 200 (text/html)
+
+        Message status updated
+            
++ Response 400 (text/html)
+        
+        Missing conversation id
+
++ Response 404 (text/html)
+
+        Message not found
+
++ Response 500 (text/html)
+
+        The server encountered an error while trying to process the request
+
+## All messages in a conversation [/message/withConversation/{conversationId}]
+
+### Retrieve all messages in a conversation [GET]
+
++ Request (application/x-www-form-urlencoded)
+
     + Headers
 
             Authentication: Bearer JWT
@@ -301,63 +580,107 @@ through daily journaling and spontaneous messages with others.
 + Response 200 (application/json)
 
     + Attributes (array[Message])
-
-## New unopened message [/message/{?userId,url}]
-
-### POST [POST]
-
-+ Parameters
-    - userId (AliceId)
-    - url (MessageUrl)
-
-+ Request (application/json)
-    + Headers
-
-            Authentication: Bearer JWT
-        
-+ Response 200 (application/json)
-
-    + Attributes (Message)
-
-## New message from a conversation [/message/withConversation{?userId,url,conversationId}]
-
-### POST [POST]
-
-+ Parameters
-    - userId (AliceId)
-    - url (MessageUrl)
-    - conversationId (ConversationId)
-
-+ Request (application/json)
-    + Headers
-
-            Authentication: Bearer JWT
-        
-+ Response 200 (application/json)
-
-    + Attributes (Message)
-
-## Open the specified message [/message/{messageId}/{?conversationId}]
-
-### PUT [PUT]
-
-+ Parameters
-    - conversationId (ConversationId)
     
-+ Request (application/json)
+    + Body
+            
+            [
+                {
+                    "id": "56a72976-ce77-44e1-aa9b-7c55a071a65b",
+                    "is_open": true,
+                    "url": "cloudstorage.com",
+                    "createdAt": "2020-09-19T09:13:26.646Z",
+                    "deletedAt": null,
+                    "user_id": "edf92800-9981-4105-8187-b02c211a6fdf",
+                    "conversation_id": "3d8c5095-e897-4e8d-ac97-74b7f1be0c10"
+                }
+            ]
+            
++ Response 500 (text/html)
+
+        The server encountered an error while trying to process the request
+
+## New unopened message [/message]
+
+### Create a new message to be sent to the cloud [POST]
+
++ Request (application/x-www-form-urlencoded)
+
     + Headers
 
             Authentication: Bearer JWT
+            
+    + Attributes
+        + url (MessageUrl)
+            
+        
++ Response 200 (application/json)
+
+    + Attributes (UnopenedMessage)
+    
+    + Body
+    
+            {
+                "id": "56a72976-ce77-44e1-aa9b-7c55a071a65b",
+                "is_open": false,
+                "url": "cloudstorage.com",
+                "createdAt": "2020-09-19T09:13:26.646Z",
+                "deletedAt": null,
+                "user_id": "edf92800-9981-4105-8187-b02c211a6fdf",
+                "conversation_id": null
+            }
+            
++ Response 400 (text/html)
+
+        Missing url
+        
++ Response 500 (text/html)
+
+        The server encountered an error while trying to process the request
+
+## New message in a conversation [/message/withConversation]
+
+### Create a new message in a conversation [POST]
+
++ Request (application/x-www-form-urlencoded)
+
+    + Headers
+
+            Authentication: Bearer JWT
+            
+    + Attributes
+        + url (MessageUrl)
+        + conversationId (ConversationId)
+            
         
 + Response 200 (application/json)
 
     + Attributes (Message)
+    
+    + Body
+    
+            {
+                "id": "56a72976-ce77-44e1-aa9b-7c55a071a65b",
+                "is_open": true,
+                "url": "cloudstorage.com",
+                "createdAt": "2020-09-19T09:13:26.646Z",
+                "deletedAt": null,
+                "user_id": "edf92800-9981-4105-8187-b02c211a6fdf",
+                "conversation_id": null
+            }
+            
++ Response 400 (text/html)
+
+        Missing url or conversation id
+        
++ Response 500 (text/html)
+
+        The server encountered an error while trying to process the request
 
 # Group User
 
-## User profile [/user/profile]
+## User profile [/user/profile{?name,alias}]
 
-### GET [GET]
+### Retrieve user's profile [GET]
 
 + Request (application/json)
     + Headers
@@ -367,26 +690,15 @@ through daily journaling and spontaneous messages with others.
 + Response 200 (application/json)
 
     + Attributes (User)
+    
++ Response 500 (text/html)
 
-
-### POST [POST]
-
-+ Request (application/json)
-    + Headers
-
-            Authentication: Bearer JWT
-            
-    + Attributes
-        + username (string)
-        + password (string)
-        + name (string)
-
-+ Response 200 (application/json)
+        The server encountered an error while trying to process the request
 
 
 ## Get list of users blocked by a user [/user/blocked]
 
-### GET [GET]
+### Retrieve blocked users [GET]
 
 + Request (application/json)
     + Headers
@@ -396,10 +708,14 @@ through daily journaling and spontaneous messages with others.
 + Response 200 (application/json)
 
     + Attributes (array[BlockedUser])
+    
++ Response 500 (text/html)
+
+        The server encountered an error while trying to process the request
 
 ## Block a user [/user/block{?id}]
 
-### POST [POST]
+### Block a user [POST]
 
 + Parameters
     - id (Id) - id of user to block
@@ -410,16 +726,52 @@ through daily journaling and spontaneous messages with others.
             Authentication: Bearer JWT
         
 
++ Response 200 (text/html)
+
+        User blocked
+        
++ Response 400 (text/html)
+
+        Missing id of user to block
+        
++ Response 500 (text/html)
+
+        The server encountered an error while trying to process the request
+        
+## Get a specific user [/user/{userId}]
+
+### Retrieve a specific user's profile [GET]
+
++ Request (application/json)
+    + Headers
+
+            Authentication: Bearer JWT
+
 + Response 200 (application/json)
 
+    + Attributes (SanitisedUser)
+        
++ Response 404 (text/html)
+
+        No such user found
+        
++ Response 500 (text/html)
+
+        The server encountered an error while trying to process the request
 
 # Data Structures
 
 ## AuthRequest (object)
-- username: exampleUser123 (string, required)
+- username: johnny (string, required)
 - password: password123 (string, required)
 
-## AuthResponse (User)
+## AuthResponse (object)
+- id (Id)
+- accessToken (AccessToken)
+- refreshToken (RefreshToken)
+
+## AuthResponseGuest (object)
+- id (Id)
 - accessToken (AccessToken)
 - refreshToken (RefreshToken)
 
@@ -427,37 +779,57 @@ through daily journaling and spontaneous messages with others.
 - prompt (string)
 - content (string)
 
-## JournalPage (object)
-- weather: sunny (string)
-- location: sg (string)
-- prompt: What are you grateful for today? (string)
-- content: Mi familia (string)
-- mood: happy (string)
+## JournalPage (JournalPageInformation)
+- id (JournalPageId) - ID of the journal page
+- date (JournalDate) - Date that the journal page was filled in the first time
+
+## JournalPageInformation (object)
+- weather: sunny (string) - Weather in the user's location
+- location: sg (string) - User's location
+- prompt: What are you grateful for today? (string) - Prompt 
+- content: Mi familia (string) - User's response to the prompt
+- mood: happy (string) - User's mood
 
 ## Conversation (object)
-- id (ConversationId)
-- first_user_id (AliceId)
-- second_user_id (BobId)
+- id (ConversationId) - Conversation ID
+- first_alias (FirstAlias) - Alias of the first user
+- second_alias (SecondAlias) - Alias of the second user
+- first_user_id (AliceId) - ID of the first user
+- second_user_id (BobId) - ID of the second user
+- createdAt (CreatedAt) - Date of creation of the conversation
+- deletedAt (DeletedAt) - Date of deletion of the conversation
 
 ## Message (object)
-- id (MessageId)
-- is_open (boolean)
-- url (MessageUrl)
-- createdAt (CreatedAt)
-- deletedAt (DeletedAt)
-- user_id (AliceId)
-- conversation_id (ConversationId)
+- id (MessageId) - Message ID
+- is_open: true (boolean) - Whether the message was opened by another user
+- url (MessageUrl) - URL of the voice recording made by the user
+- createdAt (CreatedAt) - Date of creation of the message
+- deletedAt (DeletedAt) - Date of deletion of the message
+- user_id (AliceId) - User who sent the message
+- conversation_id (ConversationId) - Conversation ID
 
-## BlockedUser (object)
-- id (Id)
-- name: john (string)
-- username: johnny (string)
+## UnopenedMessage (object)
+- id (MessageId) - Message ID
+- is_open: false (boolean) - Whether the message was opened by another user
+- url (MessageUrl) - URL of the voice recording made by the user
+- createdAt (CreatedAt) - Date of creation of the message
+- deletedAt (DeletedAt) - Date of deletion of the message
+- user_id (AliceId) - User who sent the message
+- conversation_id (EmptyConversationId) - Conversation ID
 
 ## User (object)
-- id (Id)
-- fbId: 1234567890873169 (string)
-- name: john (string)
-- alias: `simple-cat` (string)
+- id (Id) - User ID
+- username: johnny (string)
+
+## GuestUser
+- id (Id) - User ID
+- username: null (string)
+
+## BlockedUser
+- blocked_user_id (AliceId) - Blocked User ID
+
+## SanitisedUser (object)
+- id (Id)  - User ID
 - username: johnny (string)
 
 ## Date (string)
@@ -479,7 +851,7 @@ through daily journaling and spontaneous messages with others.
 `56a72976-ce77-44e1-aa9b-7c55a071a65b`
 
 ## MessageUrl (string)
-`apiary.com`
+`cloudstorage.com`
 
 ## CreatedAt (string)
 `2020-09-19T09:13:26.646Z`
@@ -487,11 +859,28 @@ through daily journaling and spontaneous messages with others.
 ## DeletedAt (string)
 null
 
+## EmptyConversationId (string)
+null
+
 ## Token (string)
-`aaAbbCciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDA0MTMwODAxNjMsImV4cCI6MTYwMDQxMzE2NjU2M30.3zapZc7hXakM3xFZlkunOXH5BOYmMpZkGZVPtz-Sm8M`
+`Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5YzllY2UyMS0yMDAxLTQwOGYtYWI0YS04MzY2OTlkMmJiNjMiLCJpYXQiOjE2MDA4NjUzOTUsImV4cCI6MTYwMDk1MTc5NX0.6rmhi_7SkYYzAXItZS55XGB8bjDUC_xfFNlY9TauoPg`
 
 ## AccessToken (object)
-- token (Token)
-- expiresIn (string)
+- token (Token) - JWT access token
+- expires: 1d (string) - time for token until expiration since creation
 
-## RefreshToken (Token)
+## RefreshToken (string)
+`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5YzllY2UyMS0yMDAxLTQwOGYtYWI0YS04MzY2OTlkMmJiNjMiLCJpYXQiOjE2MDA4NjUzOTV9.HkvwedlF-yf-o4tYUrvXE-lMZjSfBhCH-tF2ddEVbrI`
+- JWT refresh token used to request for new access token
+
+## FirstAlias (string)
+`involved-fuchsia-takin`
+
+## SecondAlias (string)
+`homely-coffee-toad`
+
+## JournalPageId (string)
+`38f9972c-803e-4c5a-a687-00c4fd52ba59`
+
+## JournalDate (string)
+`2020-09-01`
